@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>카페 키오스크</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <div id="app">
+
+    <!-- 1. 홈/카테고리 화면 -->
+    <section id="screen-home" class="screen active">
+      <header class="topbar">
+        <h1>☕ 서울카페 키오스크</h1>
+        <button id="cart-toggle-btn" class="cart-fab">
+          🛒 <span id="cart-count">0</span>
+        </button>
+      </header>
+
+      <nav id="category-tabs" class="category-tabs"></nav>
+
+      <main id="menu-grid" class="menu-grid"></main>
+
+      <aside id="cart-panel" class="cart-panel">
+        <div class="cart-panel-header">
+          <h2>장바구니</h2>
+          <button id="cart-close-btn" class="icon-btn">✕</button>
+        </div>
+        <div id="cart-items" class="cart-items"></div>
+        <div class="cart-footer">
+          <div class="cart-total-row">
+            <span>합계</span>
+            <strong id="cart-total">0원</strong>
+          </div>
+          <button id="order-btn" class="primary-btn" disabled>주문하기</button>
+        </div>
+      </aside>
+    </section>
+
+    <!-- 2. 옵션 선택 모달 -->
+    <div id="option-modal" class="modal-overlay hidden">
+      <div class="modal-box">
+        <h2 id="option-modal-title"></h2>
+        <div id="option-groups"></div>
+        <div class="qty-row">
+          <span>수량</span>
+          <div class="qty-control">
+            <button id="qty-minus" class="icon-btn">−</button>
+            <span id="qty-value">1</span>
+            <button id="qty-plus" class="icon-btn">+</button>
+          </div>
+        </div>
+        <div class="modal-actions">
+          <button id="option-cancel-btn" class="secondary-btn">취소</button>
+          <button id="option-add-btn" class="primary-btn">
+            담기 (<span id="option-add-price">0</span>원)
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. 주문 방식 선택 -->
+    <section id="screen-order-type" class="screen">
+      <h2>주문 방식을 선택해주세요</h2>
+      <div class="big-choice-row">
+        <button class="big-choice-btn" data-order-type="dine_in">
+          🍽️<span>매장 식사</span>
+        </button>
+        <button class="big-choice-btn" data-order-type="takeout">
+          🥤<span>포장</span>
+        </button>
+      </div>
+      <button class="secondary-btn back-btn" data-back-to="screen-home">← 뒤로</button>
+    </section>
+
+    <!-- 5. 가상 결제 화면 -->
+    <section id="screen-payment" class="screen">
+      <h2>결제 수단을 선택해주세요</h2>
+      <p class="payment-total">결제 금액: <strong id="payment-total">0원</strong></p>
+      <div class="big-choice-row">
+        <button class="big-choice-btn" data-pay-method="card">
+          💳<span>카드 결제</span>
+        </button>
+        <button class="big-choice-btn" data-pay-method="simple_pay">
+          📱<span>간편 결제</span>
+        </button>
+      </div>
+      <p class="demo-note">※ 실제 결제는 이루어지지 않는 가상(데모) 결제입니다.</p>
+      <button class="secondary-btn back-btn" data-back-to="screen-order-type">← 뒤로</button>
+    </section>
+
+    <!-- 결제 처리중 오버레이 -->
+    <div id="payment-processing" class="modal-overlay hidden">
+      <div class="modal-box processing-box">
+        <div class="spinner"></div>
+        <p>결제 처리중입니다...</p>
+      </div>
+    </div>
+
+    <!-- 6. 주문 완료 화면 -->
+    <section id="screen-complete" class="screen">
+      <div class="complete-box">
+        <div class="complete-check">✓</div>
+        <h2>결제가 완료되었습니다</h2>
+        <p class="order-number-label">주문번호</p>
+        <p id="complete-order-number" class="order-number"></p>
+        <p id="complete-wait-time" class="wait-time"></p>
+        <p class="complete-sub">주문번호를 확인하시고 픽업대에서 기다려주세요.</p>
+        <button id="restart-btn" class="primary-btn">처음으로</button>
+      </div>
+    </section>
+
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
